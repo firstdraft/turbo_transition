@@ -66,3 +66,11 @@ Additional thoughts:
 
  - It would be nice to allow users to define their own animations and invoke them.
  - If you Google "turbolinks transitions", you'll see that the idea is not novel, but perhaps using them in this particular way and in conjunction with `link_to` might be. And no prior implementation was developed very much, as far as I can tell; if there is a one that is useable/maintained, I'd love to just use it.
+
+## Game Plan V1
+
+ 1. As soon as a click is initiated, capture an image of the viewport (using something like PhantomJS?).
+ 1. Set the capture as the background of the `<html>` element.
+ 1. Move the `<body>` offscreen.
+ 1. Start animating the `<body>` in immediately, while the content is rendering.
+ 1. Hopefully the content finishes rendering before the animation completes. Even if not, the experience is no worse than the current state of affairs.
