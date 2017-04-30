@@ -4,7 +4,7 @@
 
 It's pretty cool that since, on any given Rails app, we tend to use Bootstrap (or some other responsive grid), [Rails unobtrusive Ajax helpers](http://guides.rubyonrails.org/working_with_javascript_in_rails.html#built-in-helpers), and [some touch icons/favicons](http://realfavicongenerator.net/) anyway, a user who bookmarks the site to their homescreen on a mobile device has a pretty decent "app" with no specific effort on our part.
 
-The one thing that makes it _feel_ markedly different is, in my opinion, the jarring transitions between screens. On iOS, for example, most navigation is dominated by the standard slide-in-from-right when navigating "in" to something, and slide-in-from-left when navigating back "out".
+The one thing that makes it _feel_ markedly different is, in my opinion, the abrupt transitions between pages. On iOS, for example, most navigation is dominated by the standard slide-in-from-right when navigating "in" to something, and slide-in-from-left when navigating back "out".
 
 Other typical interactions bring up sheets or modals with the next "page" of content, or fade in the content and then fade it back out. iOS achieves this by keeping a stack of views in memory. On the stateless web, of course, we can't do that.
 
@@ -40,7 +40,7 @@ Turbolinks is a zero-extra-effort solution for providing Ajax-like performance. 
 
 ## Hypothesis
 
-Hypothesis: **_We can leverage Turbolinks events to create animated transitions between `<body>`s during page navigation._**
+Hypothesis: **_We can leverage Turbolinks events to create iOS-like animated transitions between pages without any extra code required._**
 
 Here's how I would want it to work:
 
@@ -56,7 +56,7 @@ Here's how I would want it to work:
 <%= link_to "Back", events_path, turbo_transition: "slideInLeft" %>
 ```
 
-Perhaps there could be an initializer to set a global default value for `turbolinks_transition`.
+Perhaps there could be an initializer to set a global default value for `turbo_transition`.
 
 ## Implementation
 
@@ -69,7 +69,7 @@ Additional thoughts:
 
 ## Game Plan V1
 
- 1. As soon as a click is initiated, capture an image of the viewport (using something like PhantomJS?).
+ 1. As soon as a click is initiated, capture an image of the viewport (using something like [this](https://github.com/niklasvh/html2canvas)?).
  1. Set the capture as the background of the `<html>` element.
  1. Move the `<body>` offscreen.
  1. Start animating the `<body>` in immediately, while the content is rendering.
